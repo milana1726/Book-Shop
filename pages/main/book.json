@@ -1,0 +1,21 @@
+[{
+    "author": "Kate Quinn",
+    "imageLink": "../../assets/images/diamond-eye.jpg",
+    "title": "The Diamond Eye",
+    "price": 28,
+    "description": "The New York Times bestselling author of The Rose Code returns with an unforgettable World War II tale of a quiet bookworm who becomes history's deadliest female sniper. Based on a true story."
+},
+{
+    "author": "Rebecca Serle",
+    "imageLink": "../../assets/images/five-years.jfif",
+    "title": "In Five Years",
+    "price": 13,
+    "description": "Where do you see yourself in five years? When Type-A Manhattan lawyer Dannie Kohan is asked this question at the most important interview of her career, she has a meticulously crafted answer at the ready. Later, after nailing her interview and accepting her boyfriend's marriage proposal, Dannie goes to sleep knowing she is right on track to achieve her five-year plan..."
+},
+{
+    "author": "Erica Katz",
+    "imageLink": "../../assets/images/fake.jfif",
+    "title": "Fake: A Novel",
+    "price": 22,
+    "description": "'Fake' is great fun, offering a peek into a world of glitz that most of us will never glimpse firsthand. — Washington Post. From the author of The Boys’ Club, a gripping novel set in the high-stakes world of art forgery that moves across the globe, from the trendy art galleries of Manhattan's Chelsea neighborhood to the high-flying international art fairs of Hong Kong."
+}]
