@@ -1,60 +1,84 @@
-//main wrapper
+let cartTemp = [];
+let order = '';
+let totalPrice = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const fragment = document.createDocumentFragment();
+
+  const body = document.querySelector('body');
+
+  //main wrapper
   let wrapper = document.createElement('div');
   wrapper.classList.add('wrapper');
   document.body.appendChild(wrapper);
 
 
-//header
-let header = document.createElement('header');
+  //header
+  const header = document.createElement('header');
 
-let header_container = document.createElement('div');
-header_container.classList.add('header_container');
+  const header_container = document.createElement('div');
+  header_container.classList.add('header_container');
 
-let h1 = document.createElement('h1');
-h1.textContent = 'Welcome to amazing Book Shop!';
+  const h1 = document.createElement('h1');
+  h1.textContent = 'Welcome to amazing Book Shop!';
 
-let headerLogo = document.createElement('div');
-headerLogo.classList.add('header_logo');
+  const headerLogo = document.createElement('div');
+  headerLogo.classList.add('header_logo');
 
-let image = document.createElement('img');
-image.src = "../../assets/images/book_image.png";
-image.alt = "header_logo";
+  const image = document.createElement('img');
+  image.src = "../../assets/images/book_image.png";
+  image.alt = "header_logo";
 
-header.append(header_container);
-header_container.append(h1);
-header_container.append(headerLogo);
-headerLogo.append(image);
+  header.append(header_container);
+  header_container.append(h1, headerLogo);
+  headerLogo.append(image);
 
-//main
-let main = document.createElement('main');
+  //main
+  const main = document.createElement('main');
 
-let main_container = document.createElement('div');
-main_container.classList.add('main_container');
+  const main_container = document.createElement('div');
+  main_container.classList.add('main_container');
 
-let book_catalog = document.createElement('div');
-book_catalog.classList.add('book_catalog');
+  const book_catalog = document.createElement('div');
+  book_catalog.classList.add('book_catalog');
 
-let cart = document.createElement('div');
-cart.classList.add('cart');
+  const cart = document.createElement('div');
+  cart.classList.add('cart');
 
-main.append(main_container);
-main_container.append(book_catalog, cart);
+  main.append(main_container);
+  main_container.append(book_catalog, cart);
 
-//modal
-let modalContainer = document.createElement('div');
-modalContainer.classList.add('modal_container');
+  //modal
+  const modalContainer = document.createElement('div');
+  modalContainer.classList.add('modal_container');
 
-//book catalog
-function bookCatalog() {
-  return fetch('./book.json')
-  .then(response => {
-      return response.json();
-  })
-  .then(data => {
-      let books = data.map((item, index) => ({...item, id: index}));
-      return books;
-  });
-}
+  //total cart section
+  const total = document.createElement('div');
+  total.classList.add('total');
+  total.innerHTML = `
+    <hr>
+    <p class="total_prise">Total: <b><span class="total_count">${totalPrice}</span></b></p>
+    <button class="button_confirm" type="button" 
+      onClick="location.href='../delivery/index.html'">Confirm order</button>`;
+  cart.append(total);
+
+  wrapper.append(header, main, modalContainer);
+
+  fetch('./book.json')
+          .then(response => {
+              return response.json();
+          })
+          .then(data => {
+            let books = data.map((item, index) => ({...item, id: index}));
+            return books;
+          })
+          .then(data => {
+            bookInfo(data);
+          });
+
+      fragment.appendChild(wrapper);
+      body.appendChild(fragment);
+});
 
 function bookInfo(data) {
   let output = '';
@@ -73,55 +97,42 @@ function bookInfo(data) {
         </div>`
   }
   
-document.querySelector('.book_catalog').innerHTML = output;
-  
-const moreButton = document.querySelectorAll('.button_more');
-moreButton.forEach((button, index) => {
-    button.onclick = () => {
-        openModal(data, index);
-    }
-});
-
-function openModal(data, index) {
-  let output = '';
-      output = `
-      <div class="modal_card">
-        <p class="author">${data[index].author}</p>
-        <p class="title">${data[index].title}</p>
-        <p class="description">${data[index].description}</p>
-        <div class="modal_close" type="button">+<div>
-      </div>`
-      
-  document.querySelector('.modal_container').style.display='block';
-  document.querySelector('.modal_container').innerHTML = output;
-  const closeButton = document.querySelector('.modal_close');
-    closeButton.onclick = () => {
-          document.querySelector('.modal_container').style.display='none';
+  document.querySelector('.book_catalog').innerHTML = output;
+    
+  const moreButton = document.querySelectorAll('.button_more');
+  moreButton.forEach((button, index) => {
+      button.onclick = () => {
+          openModal(data, index);
       }
-}
+  });
 
-const cartButton = document.querySelectorAll('.button_cart');
-cartButton.forEach((button, index) => {
-    button.onclick = () => {
-        addToCart(data, index);
-    }
-  }) 
+  function openModal(data, index) {
+    let output = '';
+        output = `
+        <div class="modal_card">
+          <p class="author">${data[index].author}</p>
+          <p class="title">${data[index].title}</p>
+          <p class="description">${data[index].description}</p>
+          <div class="modal_close" type="button">+<div>
+        </div>`
+        
+    document.querySelector('.modal_container').style.display='block';
+    document.querySelector('.modal_container').innerHTML = output;
+    const closeButton = document.querySelector('.modal_close');
+      closeButton.onclick = () => {
+            document.querySelector('.modal_container').style.display='none';
+        }
+  }
+
+  const cartButton = document.querySelectorAll('.button_cart');
+  cartButton.forEach((button, index) => {
+      button.onclick = () => {
+          addToCart(data, index);
+      }
+    }) 
 }
 
 //add to cart
-let cartTemp = [];
-let order = '';
-let totalPrice = 0;
-
-let total = document.createElement('div');
-total.classList.add('total');
-total.innerHTML = `
-  <hr>
-  <p class="total_prise">Total: <b><span class="total_count">${totalPrice}</span></b></p>
-  <button class="button_confirm" type="button" 
-    onClick="location.href='../delivery/index.html'">Confirm order</button>`;
-cart.append(total);
-
 function addToCart(data, index) {
   cartTemp.push(data[index]);
   totalPrice += data[index].price;
@@ -148,15 +159,42 @@ function cartInfo(cartTemp, index) {
         </div>`
     }
     document.querySelector('.total_count').innerHTML = `${totalPrice}$`;
+
+    const removeButton = document.querySelectorAll('.button_delete');
+    removeButton.forEach((button, index) => {
+        button.onclick = () => {
+            removeFromCart(index);
+        }
+    }) 
 }
 
-function createShopPage() {
-  bookCatalog().then(data => {
-    bookInfo(data);
-  });
+// function removeFromCart(index) {
+//   if (totalPrice !== 0){
+//     totalPrice -= cartTemp[index].price;
+//       document.querySelector('.total_count').innerHTML = `${totalPrice}$`;
+//   }
+//   for (let i = 0; i < cartTemp[index]; i += 1) {
+//     document.querySelectorAll('.button_delete')[i].addEventListener('click', (e) => {
+//         e.target.parentElement.remove();
+//   // cartTemp.splice(cartTemp[index], 1);
 
-  wrapper.append(header, main, modalContainer);
+//   //console.log(cartTemp);
+//     });
+    
+//   }
 
-}
+//   if (cartTemp.length === 1) {
+//       const clearCart = document.createElement('div');
+//       clearCart.classList.add('empty_cart');
+//       clearCart.innerHTML = `
+//       <div class="book_cart">Your cart is empty</div>
+//       `
+//       cart.append(clearCart);
+//       totalPrice = 0;
+//     } else {
+      
+//   }
 
-window.addEventListener('load', createShopPage());
+//   return cartTemp, totalPrice;
+
+// }
