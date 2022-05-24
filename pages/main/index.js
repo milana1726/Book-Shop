@@ -38,13 +38,13 @@ let cart = document.createElement('div');
 cart.classList.add('cart');
 
 main.append(main_container);
-main_container.append(book_catalog);
-main_container.append(cart);
+main_container.append(book_catalog, cart);
 
+//modal
 let modalContainer = document.createElement('div');
 modalContainer.classList.add('modal_container');
 
-//books catalog
+//book catalog
 function bookCatalog() {
   return fetch('./book.json')
   .then(response => {
@@ -67,7 +67,7 @@ function bookInfo(data) {
             <p class="title">${item.title}</p>
             <p class="author">${item.author}</p>
             <p class="price">${item.price}$</p>
-            <button class="button_more" type="button">Description</button>
+            <button class="button_more" type="button">Show more</button>
             <button class="button_cart" type="button">Add to cart</button>
           </div>
         </div>`
@@ -108,36 +108,46 @@ cartButton.forEach((button, index) => {
   }) 
 }
 
-// add to cart
-let cartArr = [];
+//add to cart
+let cartTemp = [];
 let order = '';
 let totalPrice = 0;
 
+let total = document.createElement('div');
+total.classList.add('total');
+total.innerHTML = `
+  <hr>
+  <p class="total_prise">Total: <b><span class="total_count">${totalPrice}</span></b></p>
+  <button class="button_confirm" type="button" 
+    onClick="location.href='../delivery/index.html'">Confirm order</button>`;
+cart.append(total);
 
 function addToCart(data, index) {
-  cartArr.push(data[index]);
+  cartTemp.push(data[index]);
   totalPrice += data[index].price;
   localStorage.setItem('totalPrice', totalPrice);
-  cartInfo(cartArr, index);
+  cartInfo(cartTemp, index);
+  console.log(totalPrice);
   return totalPrice;
 }
 
-function cartInfo(cartArr, index) {
-  if (cartArr.length == 4) {
+function cartInfo(cartTemp, index) {
+  if (cartTemp.length == 4) {
     alert('Your cart is full!');
   } else {
     let output = document.querySelector('.cart');
     output.innerHTML += `
         <div class="book_card">
-          <img src="${cartArr[index].imageLink}" alt="image_book">
+          <img src="${cartTemp[index].imageLink}" alt="image_book">
           <div class="about_book">
-          <p class="title">${cartArr[index].title}</p>
-            <p class="author">${cartArr[index].author}</p>
+          <p class="title">${cartTemp[index].title}</p>
+            <p class="author">${cartTemp[index].author}</p>
             <button class="button_delete" type="button">
               <img id="icon_delete" src="../../assets/icons/delete_icon.svg" alt="delete_icon"/></button>
           </div>
         </div>`
     }
+    document.querySelector('.total_count').innerHTML = `${totalPrice}$`;
 }
 
 function createShopPage() {
