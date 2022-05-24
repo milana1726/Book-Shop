@@ -58,6 +58,14 @@ h1:hover {
 }
 
 /* book catalog , cart */
+
+h2 {
+    padding: 0;
+    margin: -10px 0 30px 0;
+    align-items: center;
+}
+
+
 .book_catalog, .cart {
     width: 45%;
     display: flex;
@@ -65,12 +73,19 @@ h1:hover {
     align-items: center;
     border: #545454 solid 1px;
     border-radius: 10px;
-    padding: 40px 20px;
+    padding: 40px 20px 20px 20px;
     background-color: rgba(240, 255, 255, 0.2);
 }
 
 .cart {
     position: relative;
+}
+
+.cart_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .book_card {
@@ -139,7 +154,7 @@ h1:hover {
 
 .button_more,
 .button_cart,
-.button_confirm {
+#button_confirm {
     margin-top: 10px;
     width: 100px;
     height: 25px;
@@ -152,7 +167,7 @@ h1:hover {
 	cursor: pointer;
 }
 
-.button_confirm {
+#button_confirm {
     margin-top: 0;
     width: 100px;
     height: 30px;
@@ -160,8 +175,7 @@ h1:hover {
 
 .button_more:hover,
 .button_cart:hover,
-.button_delete:hover,
-.button_confirm:hover {
+#button_confirm:hover {
     background: #FDDCC4;
     transition: all 0.5s ease-in;
 }
@@ -178,6 +192,12 @@ h1:hover {
     width: 25px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.button_delete:hover {
+    background: #fff;
+    transition: all 0.5s ease-in;
 }
 
 
@@ -245,6 +265,24 @@ h1:hover {
 .total {
     width: 96.5%;
     position: absolute;
-    bottom: 20px;
+    bottom: 40px;
     left: 10px;
+}
+
+#button_confirm:disabled {
+    cursor: auto;
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+/* footer */
+footer {
+    display: flex;
+    justify-content: center;
+}
+
+h3 {
+    align-items: center;
+    font-size: 12px;;
 }
