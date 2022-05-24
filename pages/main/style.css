@@ -69,6 +69,10 @@ h1:hover {
     background-color: rgba(240, 255, 255, 0.2);
 }
 
+.cart {
+    position: relative;
+}
+
 .book_card {
     width: 65%;
     margin-bottom: 30px;
@@ -133,7 +137,9 @@ h1:hover {
     font-weight: 500;
 }
 
-.button_more, .button_cart {
+.button_more,
+.button_cart,
+.button_confirm {
     margin-top: 10px;
     width: 100px;
     height: 25px;
@@ -146,7 +152,16 @@ h1:hover {
 	cursor: pointer;
 }
 
-.button_more:hover, .button_cart:hover, .button_delete:hover {
+.button_confirm {
+    margin-top: 0;
+    width: 100px;
+    height: 30px;
+}
+
+.button_more:hover,
+.button_cart:hover,
+.button_delete:hover,
+.button_confirm:hover {
     background: #FDDCC4;
     transition: all 0.5s ease-in;
 }
@@ -224,4 +239,12 @@ h1:hover {
 .modal_card .author{
     margin-top: -70px;
     font-size: 18px;
+}
+
+/* total  */
+.total {
+    width: 96.5%;
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
 }
