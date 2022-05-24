@@ -1,5 +1,4 @@
-let cartTemp = [];
-// let order = '';
+let tempCart = [];
 let totalPrice = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -154,10 +153,11 @@ function bookCatalog(data) {
 
 //add to cart
 function addToCart(data, index) {
-  cartTemp.push(data[index]);
+  tempCart.push(data[index]);
+
   totalPrice += data[index].price;
   localStorage.setItem('totalPrice', totalPrice);
-  updateCart(cartTemp);
+  updateCart(tempCart);
 
   let btn_confirm = document.getElementById('button_confirm');
   btn_confirm.disabled = false;
@@ -165,12 +165,13 @@ function addToCart(data, index) {
   return totalPrice;
 }
 
-function updateCart(cartTemp) {
-  if (cartTemp.length == 4) {
+function updateCart(tempCart) {
+  if (tempCart.length === 4) {
     alert('Your cart is full!');
+    tempCart.length = 3;
   } else {
     let output = '';
-    for (let item of cartTemp) {
+    for (let item of tempCart) {
         output += `
         <div class="book_card">
           <img src="${item.imageLink}" alt="image_book">
@@ -197,17 +198,24 @@ function updateCart(cartTemp) {
 
 function removeFromCart(index) {
   if (totalPrice !== 0){
-    totalPrice -= cartTemp[index].price;
+    totalPrice -= tempCart[index].price;
     document.querySelector('.total_count').innerHTML = `${totalPrice}$`;
   }
 
-  cartTemp.splice(cartTemp[index], 1);
-  updateCart(cartTemp);
+  tempCart.splice(tempCart[index], 1);
+  updateCart(tempCart);
   
-  return cartTemp, totalPrice;
+  if (tempCart.length === 0){
+    let btn_confirm = document.getElementById('button_confirm');
+    btn_confirm.disabled = true;
+
+    alert('Your cart is empty!')
+    totalPrice = 0;
+    console.log (totalPrice);
+  }
+
+  localStorage.setItem('totalPrice', totalPrice);
+
+  return tempCart, totalPrice;
 }
-
-  
-
-
   
