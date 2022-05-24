@@ -236,5 +236,12 @@ footer {
 
 h3 {
     align-items: center;
-    font-size: 12px;;
+    font-size: 12px;
+}
+
+#total_count {
+    align-items: center;
+    font-size: 16px;
+    color: #000;
+
 }

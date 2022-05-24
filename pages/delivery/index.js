@@ -5,6 +5,10 @@ const order = {
         return [date.getFullYear(), ('0' + (date.getMonth() + 1)).slice(-2), date.getDate()].join('-');
     },
 
+    totalPrice() {
+        return localStorage.getItem('totalPrice');
+    },
+
     validate_form() {
         const customer_name = document.getElementById("customer_name");
         const customer_surname = document.getElementById("customer_surname");
@@ -112,4 +116,5 @@ const order = {
 
 document.getElementById('date').min = order.patternDate();
 document.body.addEventListener('mousemove', order.validate_form);
+document.getElementById('total_count').innerHTML = `${localStorage.getItem('totalPrice')}`;
 document.getElementById('submit').addEventListener('click', order.orderChecked);
